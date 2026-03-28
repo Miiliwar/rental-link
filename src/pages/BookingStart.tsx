@@ -14,6 +14,8 @@ import {
   MessageSquareWarning,
 } from 'lucide-react';
 import { getDemoItemById } from '../data/demoItems';
+import { useAuthProfile } from '../context/AuthProfileContext';
+import { recordDemoBooking } from '../services/demoBookings';
 import {
   ReturnDeadlineCountdown,
   parseReturnDeadline,
@@ -39,6 +41,7 @@ function defaultEndDate(start: string): string {
 
 export default function BookingStart() {
   const { t, i18n } = useTranslation();
+  const { user } = useAuthProfile();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const stateItemId = (location.state as { itemId?: number } | null)?.itemId;
@@ -69,6 +72,22 @@ export default function BookingStart() {
   const totalDue = Math.round((rentalSubtotal + platformFee + deposit) * 100) / 100;
 
   const handleSimulateMpesa = () => {
+    if (item) {
+      recordDemoBooking({
+        itemId: item.id,
+        itemTitle: item.title,
+        category: item.category,
+        renterEmail: user?.email ?? 'unknown@rentlink.local',
+        startDate,
+        endDate,
+        returnTime,
+        days,
+        rentalSubtotal,
+        platformFee,
+        deposit,
+        totalDue,
+      });
+    }
     setPaid(true);
   };
 

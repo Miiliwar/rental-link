@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, PackagePlus, UserCircle } from 'lucide-react';
 import { useAuthProfile } from '../../context/AuthProfileContext';
+import { isAdminUser } from '../../utils/admin';
 import LanguageSwitcher from '../LanguageSwitcher';
 
 export default function Navbar() {
   const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, loading, profileComplete, signOut } = useAuthProfile();
+  const showAdmin = user && isAdminUser(user);
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -30,6 +32,14 @@ export default function Navbar() {
 
             {!loading && user && (
               <>
+                {showAdmin && (
+                  <Link
+                    to="/admin"
+                    className="text-gray-700 hover:text-emerald-700 font-medium inline-flex items-center gap-1"
+                  >
+                    {t('nav.admin')}
+                  </Link>
+                )}
                 <Link
                   to="/list"
                   className="text-gray-700 hover:text-emerald-700 font-medium inline-flex items-center gap-1"
@@ -121,6 +131,15 @@ export default function Navbar() {
           </Link>
           {user && (
             <>
+              {showAdmin && (
+                <Link
+                  to="/admin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50"
+                >
+                  {t('nav.admin')}
+                </Link>
+              )}
               <Link
                 to="/list"
                 onClick={() => setIsMobileMenuOpen(false)}

@@ -9,7 +9,8 @@
     "login": "Log in",
     "register": "Sign up",
     "signOut": "Log out",
-    "accountAria": "Account"
+    "accountAria": "Account",
+    "admin": "Admin"
   },
   "footer": {
     "tagline": "Rent tools, gear, and equipment from people and businesses near you — with clear daily rates and deposit protection.",
@@ -230,5 +231,36 @@
   },
   "requireProfile": {
     "loading": "Loading…"
+  },
+  "admin": {
+    "badge": "Demo admin",
+    "title": "Admin dashboard",
+    "subtitle": "Monitor demo catalog stats, simulated bookings, and platform commission. Data is stored in this browser only.",
+    "demoEmailHint": "Access is limited to the account: {{email}}",
+    "exportCsv": "Export CSV",
+    "resetBookings": "Clear bookings",
+    "resetConfirm": "Remove all demo bookings from this browser? This cannot be undone.",
+    "statListings": "Catalog listings",
+    "statBookings": "Demo bookings",
+    "statActive": "{{count}} active",
+    "statRentalVolume": "Rental volume (demo)",
+    "statRentalHint": "Sum of rental subtotals",
+    "statCommission": "Platform commission (10%)",
+    "statCommissionHint": "Sum of platform fees on bookings",
+    "bookingsTitle": "Demo bookings",
+    "refresh": "Refresh",
+    "noBookings": "No bookings yet. Complete a simulated M-Pesa payment on a rental to see rows here.",
+    "colDate": "Booked",
+    "colItem": "Item",
+    "colRenter": "Renter",
+    "colRental": "Rental",
+    "colFee": "Fee",
+    "colStatus": "Status",
+    "statusActive": "Active",
+    "statusCompleted": "Completed",
+    "statusCancelled": "Cancelled",
+    "catalogTitle": "Catalog by category",
+    "catalogHint": "Static demo inventory counts",
+    "footerNote": "Demo admin — not connected to production analytics."
   }
 }

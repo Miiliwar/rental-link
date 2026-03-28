@@ -9,7 +9,8 @@
     "login": "Seeni",
     "register": "Galmaa'i",
     "signOut": "Ba'i",
-    "accountAria": "Herrega"
+    "accountAria": "Herrega",
+    "admin": "Bulchiinsa"
   },
   "footer": {
     "tagline": "Meeshaalee, qabeenya fi meeshaalee namootaafi dhaabbata naannoo keessan irraa kirsadhaa — gatii guyyaatti ifaa fi eegumsa kuusaa waliin.",
@@ -230,5 +231,36 @@
   },
   "requireProfile": {
     "loading": "Odeeffannoo…"
+  },
+  "admin": {
+    "badge": "Bulchiinsa demo",
+    "title": "Gabatee bulchiinsaa",
+    "subtitle": "Statistiksii kataloogii demo, buuqataa simulaa, fi komiishinii waltajjii ilaali. Daataan biraawzar kana qofa keessatti kuufama.",
+    "demoEmailHint": "Seenuun akkaawuntii kanaaf qofa: {{email}}",
+    "exportCsv": "CSV baasi",
+    "resetBookings": "Buuqataa haquu",
+    "resetConfirm": "Buuqataa demo hunda biraawzar kana irraa haquu? Deebisuu hin danda'amu.",
+    "statListings": "Galmee kataloogii",
+    "statBookings": "Buuqataa demo",
+    "statActive": "{{count}} hojii irra jira",
+    "statRentalVolume": "Guddina kiraa (demo)",
+    "statRentalHint": "Walitti qabama gurgurtaa kiraa",
+    "statCommission": "Komiishinii waltajjii (10%)",
+    "statCommissionHint": "Walitti qabama kaffaltii waltajjii buuqataa irratti",
+    "bookingsTitle": "Buuqataa demo",
+    "refresh": "Haaromsuu",
+    "noBookings": "Amma buuqataa hin jiru. Buuqataa argachuuf kiraa irratti kaffaltii M-Pesa simulaa xumuri.",
+    "colDate": "Buufame",
+    "colItem": "Wanti",
+    "colRenter": "Kiraataa",
+    "colRental": "Kiraa",
+    "colFee": "Kaffaltii",
+    "colStatus": "Haala",
+    "statusActive": "Hojii irra jira",
+    "statusCompleted": "Xumurameera",
+    "statusCancelled": "Haquameera",
+    "catalogTitle": "Ramaddii ramaddii",
+    "catalogHint": "Lakkoofsi galmee demo",
+    "footerNote": "Bulchiinsa demo — walmadaansa ogeessaa waliin hin walqunnamne."
   }
 }

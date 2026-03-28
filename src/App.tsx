@@ -8,6 +8,8 @@ import SearchPage from './pages/Search';
 import CompleteProfile from './pages/CompleteProfile';
 import ListItem from './pages/ListItem';
 import BookingStart from './pages/BookingStart';
+import Admin from './pages/Admin';
+import RequireAdmin from './components/RequireAdmin';
 
 function App() {
   return (
@@ -33,6 +35,14 @@ function App() {
               <RequireCompleteProfile intent="renter">
                 <BookingStart />
               </RequireCompleteProfile>
+            }
+          />
+          <Route
+            path="admin"
+            element={
+              <RequireAdmin>
+                <Admin />
+              </RequireAdmin>
             }
           />
         </Route>

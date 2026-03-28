@@ -9,7 +9,8 @@
     "login": "ግባ",
     "register": "ተመዝግብ",
     "signOut": "ውጣ",
-    "accountAria": "መለያ"
+    "accountAria": "መለያ",
+    "admin": "አስተዳዳሪ"
   },
   "footer": {
     "tagline": "በአካባቢዎ ከሰዎች እና ከንግዶች መሳሪያዎች፣ መሳሪያዎች እና መሳሪያዎችን ይከራዩ — በግልጽ የቀን ተመኖች እና የዋስትና ጥበቃ።",
@@ -230,5 +231,36 @@
   },
   "requireProfile": {
     "loading": "በመጫን ላይ…"
+  },
+  "admin": {
+    "badge": "የማሳያ አስተዳዳሪ",
+    "title": "የአስተዳዳሪ ዳሽቦርድ",
+    "subtitle": "የማሳያ ካታሎግ ስታትስቲክስ፣ የተመሳሰሉ ቦቂንጎች እና የመድረክ ክፍያ ይመልከቱ። ውሂብ በዚህ አሳሽ ብቻ ይከማቻል።",
+    "demoEmailHint": "መዳረሻ ለመለያው ብቻ ነው፦ {{email}}",
+    "exportCsv": "CSV ላክ",
+    "resetBookings": "ቦቂንጎች አጽዳ",
+    "resetConfirm": "ሁሉንም የማሳያ ቦቂንጎች ከዚህ አሳሽ ይወግዱ? ይህ ሊቀለበስ አይችልም።",
+    "statListings": "የካታሎግ ዝርዝሮች",
+    "statBookings": "የማሳያ ቦቂንጎች",
+    "statActive": "{{count}} ንቁ",
+    "statRentalVolume": "የኪራይ መጠን (ማሳያ)",
+    "statRentalHint": "የኪራይ ንዑስ ጠቅላላዎች ድምር",
+    "statCommission": "የመድረክ ክፍያ (10%)",
+    "statCommissionHint": "በቦቂንጎች ላይ የመድረክ ክፍያዎች ድምር",
+    "bookingsTitle": "የማሳያ ቦቂንጎች",
+    "refresh": "አድስ",
+    "noBookings": "እስካሁን ቦቂንግ የለም። ለማየት በኪራይ ላይ የተመሳሰለ M-Pesa ክፍያ ያጠናቅቁ።",
+    "colDate": "ተቀድሷል",
+    "colItem": "ንብረት",
+    "colRenter": "ኪራይ አንቀሳቃሽ",
+    "colRental": "ኪራይ",
+    "colFee": "ክፍያ",
+    "colStatus": "ሁኔታ",
+    "statusActive": "ንቁ",
+    "statusCompleted": "ተጠናቋል",
+    "statusCancelled": "ተሰርዟል",
+    "catalogTitle": "በምድብ ካታሎግ",
+    "catalogHint": "የቆይ ማሳያ ዝርዝር ብዛቶች",
+    "footerNote": "የማሳያ አስተዳዳሪ — ከምርት ትንታኔ ጋር አልተገናኘም።"
   }
 }
