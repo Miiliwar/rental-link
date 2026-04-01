@@ -18,6 +18,12 @@ export type DemoBookingRecord = {
   deposit: number;
   totalDue: number;
   status: DemoBookingStatus;
+  /** How the booking was paid (demo vs real STK) */
+  paymentMethod?: 'mpesa_stk' | 'demo_simulated';
+  /** Safaricom CheckoutRequestID when STK was accepted */
+  mpesaCheckoutId?: string;
+  /** Amount charged in ETB (STK) */
+  amountEtb?: number;
 };
 
 function safeParse(raw: string | null): DemoBookingRecord[] {

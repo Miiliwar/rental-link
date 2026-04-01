@@ -77,3 +77,10 @@ export function isStkLikelyAccepted(mpesa: unknown): boolean {
   if (desc.includes('success') || desc.includes('accept')) return true;
   return false;
 }
+
+export function extractCheckoutRequestId(mpesa: unknown): string | undefined {
+  if (!mpesa || typeof mpesa !== 'object') return undefined;
+  const o = mpesa as Record<string, unknown>;
+  const id = o.CheckoutRequestID ?? o.checkoutRequestID;
+  return typeof id === 'string' && id.length > 0 ? id : undefined;
+}

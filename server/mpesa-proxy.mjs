@@ -183,8 +183,34 @@ const server = http.createServer(async (req, res) => {
       stkJson = { raw: stkText };
     }
 
-    res.writeHead(stkRes.ok ? 200 : 502, headers);
-    res.end(JSON.stringify({ ok: stkRes.ok, mpesa: stkJson }));
+    /** HTTP ok + Safaricom body success (ResponseCode "0" or CheckoutRequestID present). */
+    let accepted = stkRes.ok;
+    if (accepted && stkJson && typeof stkJson === 'object') {
+      const code = stkJson.ResponseCode ?? stkJson.responseCode;
+      if (code !== undefined && code !== null && String(code) !== '0') {
+        accepted = false;
+      }
+    }
+
+    const errMsg =
+      stkJson && typeof stkJson === 'object'
+        ? String(
+            stkJson.ResponseDescription ??
+              stkJson.CustomerMessage ??
+              stkJson.errorMessage ??
+              stkJson.error ??
+              '',
+          ).trim()
+        : '';
+
+    res.writeHead(accepted ? 200 : 502, headers);
+    res.end(
+      JSON.stringify({
+        ok: accepted,
+        ...(accepted ? {} : { error: errMsg || `STK request failed (${stkRes.status})` }),
+        mpesa: stkJson,
+      }),
+    );
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     res.writeHead(502, headers);
