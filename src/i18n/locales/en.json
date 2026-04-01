@@ -224,6 +224,9 @@
     "mpesaProxyHint": "Run npm run mpesa-server with server/.env configured, or use the demo link below.",
     "demoPayLink": "Skip — confirm without real STK (demo)",
     "demoPayHint": "Use this if the sandbox proxy is not running or for quick UI testing.",
+    "testModeTitle": "M-Pesa test mode is on",
+    "testModeBody": "No call to Safaricom or your proxy — payment is simulated so you can test the booking flow without credentials.",
+    "testModePayButton": "Simulate M-Pesa payment (test mode)",
     "demoOnly": "Demo only — no real charges.",
     "label24h": "24h",
     "label1h": "1h"

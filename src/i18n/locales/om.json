@@ -224,6 +224,9 @@
     "mpesaProxyHint": "npm run mpesa-server server/.env waliin eegi, ykn linkii demo gadi jiru fayyadi.",
     "demoPayLink": "Darbi — STK dhugaa malee mirkaneessi (demo)",
     "demoPayHint": "Yoo proxy hin hojjetin ykn qorannoo UI dafanii.",
+    "testModeTitle": "Haala qorannoo M-Pesa aktiiveera",
+    "testModeBody": "Waamicha Safaricom ykn proxy hin jiru — kaffaltiin simulaatameera akka buufataa qorattan.",
+    "testModePayButton": "Kaffaltii M-Pesa simulaa (haala qorannoo)",
     "demoOnly": "Demo qofa — kaffaltiin dhugaa hin jiru.",
     "label24h": "24s",
     "label1h": "1s"

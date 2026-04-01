@@ -1,7 +1,12 @@
 /**
  * STK push is initiated via local proxy (server/mpesa-proxy.mjs) in dev.
  * Vite proxies /api/mpesa → http://127.0.0.1:8787
+ *
+ * Set VITE_MPESA_TEST_MODE=true to skip real API calls (UI + booking flow only).
  */
+export function isMpesaTestMode(): boolean {
+  return String(import.meta.env.VITE_MPESA_TEST_MODE).toLowerCase() === 'true';
+}
 
 export type StkPushPayload = {
   /** Whole ETB amount (integer, min 1) */

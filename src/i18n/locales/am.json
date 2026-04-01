@@ -224,6 +224,9 @@
     "mpesaProxyHint": "npm run mpesa-server ከserver/.env ያስፈጽሙ፣ ወይም ከታች ያለውን የማሳያ አገናኝ ይጠቀሙ።",
     "demoPayLink": "ዝለል — እውነተኛ STK ከሌለ ማሳያ",
     "demoPayHint": "ሳንድቦክስ ፕሮክሲ ካልሰራ ወይም ለፈጣን UI ሙከራ።",
+    "testModeTitle": "የM-Pesa የሙከራ ሁነታ ነቅቷል",
+    "testModeBody": "ወደ Safaricom ወይም ፕሮክሲ ጥሪ የለም — ማስያዣዎች ሳይኖሩ የቦቂንግ ፍሰትን ለመሞከር።",
+    "testModePayButton": "የM-Pesa ክፍያ ማሳያ (የሙከራ ሁነታ)",
     "demoOnly": "ማሳያ ብቻ — እውነተኛ ክፍያዎች የሉም።",
     "label24h": "24ሰ",
     "label1h": "1ሰ"

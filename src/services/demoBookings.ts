@@ -19,7 +19,7 @@ export type DemoBookingRecord = {
   totalDue: number;
   status: DemoBookingStatus;
   /** How the booking was paid (demo vs real STK) */
-  paymentMethod?: 'mpesa_stk' | 'demo_simulated';
+  paymentMethod?: 'mpesa_stk' | 'demo_simulated' | 'mpesa_test_mode';
   /** Safaricom CheckoutRequestID when STK was accepted */
   mpesaCheckoutId?: string;
   /** Amount charged in ETB (STK) */

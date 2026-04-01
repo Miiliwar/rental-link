@@ -9,4 +9,6 @@ interface ImportMetaEnv {
   readonly VITE_ETB_PER_USD?: string
   /** Email that may access /admin (demo). Default admin@rentlink.demo if unset. */
   readonly VITE_ADMIN_DEMO_EMAIL?: string
+  /** If "true", M-Pesa STK is simulated in the browser (no proxy / Safaricom call). */
+  readonly VITE_MPESA_TEST_MODE?: string
 }

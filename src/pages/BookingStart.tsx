@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   MessageSquareWarning,
   AlertCircle,
+  FlaskConical,
 } from 'lucide-react';
 import { getDemoItemById } from '../data/demoItems';
 import { useAuthProfile } from '../context/AuthProfileContext';
@@ -24,6 +25,7 @@ import {
   normalizeEthiopiaMsisdn,
   requestStkPush,
   usdToEtb,
+  isMpesaTestMode,
 } from '../services/mpesaPayment';
 import {
   ReturnDeadlineCountdown,
@@ -88,6 +90,7 @@ export default function BookingStart() {
   const deposit = item?.full_item_price ?? 0;
   const totalDue = Math.round((rentalSubtotal + platformFee + deposit) * 100) / 100;
   const amountEtb = useMemo(() => usdToEtb(totalDue, etbPerUsd), [totalDue, etbPerUsd]);
+  const mpesaTestMode = isMpesaTestMode();
 
   useEffect(() => {
     const n = normalizeEthiopiaMsisdn(metadata.phone ?? '');
@@ -96,7 +99,7 @@ export default function BookingStart() {
   }, [metadata.phone]);
 
   const completeBooking = (opts: {
-    paymentMethod: 'mpesa_stk' | 'demo_simulated';
+    paymentMethod: 'mpesa_stk' | 'demo_simulated' | 'mpesa_test_mode';
     mpesaCheckoutId?: string;
     amountEtbCharged?: number;
   }) => {
@@ -129,6 +132,19 @@ export default function BookingStart() {
   const handlePayMpesa = async () => {
     if (!item) return;
     setMpesaError(null);
+
+    if (mpesaTestMode) {
+      setMpesaLoading(true);
+      await new Promise((r) => setTimeout(r, 700));
+      setMpesaLoading(false);
+      completeBooking({
+        paymentMethod: 'mpesa_test_mode',
+        mpesaCheckoutId: 'TEST-MODE-STK',
+        amountEtbCharged: amountEtb,
+      });
+      return;
+    }
+
     const msisdn = normalizeEthiopiaMsisdn(phone);
     if (!msisdn) {
       setMpesaError(t('booking.phoneInvalid'));
@@ -379,6 +395,15 @@ export default function BookingStart() {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4">
+            {mpesaTestMode && (
+              <div className="flex gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+                <FlaskConical className="w-5 h-5 shrink-0 text-amber-700" aria-hidden />
+                <div>
+                  <p className="font-semibold">{t('booking.testModeTitle')}</p>
+                  <p className="text-amber-900/90 mt-1 leading-snug">{t('booking.testModeBody')}</p>
+                </div>
+              </div>
+            )}
             <div>
               <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
                 <Smartphone className="w-5 h-5 text-emerald-700" />
@@ -388,27 +413,31 @@ export default function BookingStart() {
                 {t('booking.amountEtb', { etb: amountEtb, usd: totalDue.toFixed(2) })}
               </p>
             </div>
-            <label className="block">
-              <span className="text-sm font-medium text-slate-700">{t('booking.phoneLabel')}</span>
-              <input
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder={t('booking.phonePlaceholder')}
-                disabled={mpesaLoading}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:ring-emerald-500 disabled:bg-slate-50"
-              />
-              <p className="text-xs text-slate-500 mt-1">{t('booking.phoneHint')}</p>
-            </label>
+            {!mpesaTestMode && (
+              <label className="block">
+                <span className="text-sm font-medium text-slate-700">{t('booking.phoneLabel')}</span>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder={t('booking.phonePlaceholder')}
+                  disabled={mpesaLoading}
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:ring-emerald-500 disabled:bg-slate-50"
+                />
+                <p className="text-xs text-slate-500 mt-1">{t('booking.phoneHint')}</p>
+              </label>
+            )}
 
             {mpesaError && (
               <div className="flex gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-800">
                 <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                 <div>
                   <p>{mpesaError}</p>
-                  <p className="text-xs text-red-700 mt-1">{t('booking.mpesaProxyHint')}</p>
+                  {!mpesaTestMode && (
+                    <p className="text-xs text-red-700 mt-1">{t('booking.mpesaProxyHint')}</p>
+                  )}
                 </div>
               </div>
             )}
@@ -421,20 +450,26 @@ export default function BookingStart() {
               className="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-4 py-4 text-white font-semibold shadow-md hover:bg-emerald-800 transition active:scale-[0.99] disabled:opacity-60 disabled:pointer-events-none"
             >
               <Smartphone className="w-5 h-5" />
-              {mpesaLoading ? t('booking.payMpesaLoading') : t('booking.payMpesa')}
+              {mpesaLoading
+                ? t('booking.payMpesaLoading')
+                : mpesaTestMode
+                  ? t('booking.testModePayButton')
+                  : t('booking.payMpesa')}
             </button>
 
-            <div className="border-t border-slate-100 pt-4">
-              <button
-                type="button"
-                onClick={handleDemoSimulate}
-                disabled={mpesaLoading}
-                className="w-full text-center text-sm font-medium text-slate-600 hover:text-emerald-800 underline-offset-2 hover:underline"
-              >
-                {t('booking.demoPayLink')}
-              </button>
-              <p className="text-center text-xs text-slate-400 mt-2">{t('booking.demoPayHint')}</p>
-            </div>
+            {!mpesaTestMode && (
+              <div className="border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  onClick={handleDemoSimulate}
+                  disabled={mpesaLoading}
+                  className="w-full text-center text-sm font-medium text-slate-600 hover:text-emerald-800 underline-offset-2 hover:underline"
+                >
+                  {t('booking.demoPayLink')}
+                </button>
+                <p className="text-center text-xs text-slate-400 mt-2">{t('booking.demoPayHint')}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
