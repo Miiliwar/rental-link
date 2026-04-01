@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'rentlink_demo_bookings_v1';
+export const DEMO_BOOKINGS_STORAGE_KEY = 'rentlink_demo_bookings_v1';
 
 export type DemoBookingStatus = 'active' | 'completed' | 'cancelled';
 
@@ -44,7 +44,7 @@ function safeParse(raw: string | null): DemoBookingRecord[] {
 
 export function getDemoBookings(): DemoBookingRecord[] {
   if (typeof window === 'undefined') return [];
-  return safeParse(localStorage.getItem(STORAGE_KEY));
+  return safeParse(localStorage.getItem(DEMO_BOOKINGS_STORAGE_KEY));
 }
 
 export function recordDemoBooking(
@@ -58,16 +58,21 @@ export function recordDemoBooking(
   };
   const list = getDemoBookings();
   list.unshift(row);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  localStorage.setItem(DEMO_BOOKINGS_STORAGE_KEY, JSON.stringify(list));
   return row;
 }
 
 export function updateDemoBookingStatus(id: string, status: DemoBookingStatus): void {
   const list = getDemoBookings();
   const next = list.map((b) => (b.id === id ? { ...b, status } : b));
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  localStorage.setItem(DEMO_BOOKINGS_STORAGE_KEY, JSON.stringify(next));
+}
+
+export function deleteDemoBooking(id: string): void {
+  const list = getDemoBookings().filter((b) => b.id !== id);
+  localStorage.setItem(DEMO_BOOKINGS_STORAGE_KEY, JSON.stringify(list));
 }
 
 export function clearAllDemoBookings(): void {
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(DEMO_BOOKINGS_STORAGE_KEY);
 }
