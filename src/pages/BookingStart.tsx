@@ -435,9 +435,10 @@ export default function BookingStart() {
                 <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                 <div>
                   <p>{mpesaError}</p>
-                  {!mpesaTestMode && (
-                    <p className="text-xs text-red-700 mt-1">{t('booking.mpesaProxyHint')}</p>
-                  )}
+                  {!mpesaTestMode &&
+                    !/proxy|mpesa-server|reach the/i.test(mpesaError || '') && (
+                      <p className="text-xs text-red-700 mt-1">{t('booking.mpesaProxyHint')}</p>
+                    )}
                 </div>
               </div>
             )}

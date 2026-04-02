@@ -34,6 +34,31 @@ export function usdToEtb(usd: number, etbPerUsd: number): number {
   return Math.max(1, Math.round(usd * etbPerUsd));
 }
 
+type StkProxyJson = { ok?: boolean; error?: string; mpesa?: unknown };
+
+function parseProxyResponse(text: string, status: number): { ok: false; error: string; json?: StkProxyJson } | { ok: true; json: StkProxyJson } {
+  const trimmed = text.trim();
+  if (!trimmed) {
+    const unreachable =
+      status === 502 || status === 503 || status === 504 || status === 0;
+    return {
+      ok: false,
+      error: unreachable
+        ? 'Could not reach the M-Pesa proxy. Run: npm run mpesa-server (from the project root, with server/.env configured).'
+        : `Empty response from server (${status}).`,
+    };
+  }
+  try {
+    return { ok: true, json: JSON.parse(trimmed) as StkProxyJson };
+  } catch {
+    return {
+      ok: false,
+      error:
+        'Invalid response from server (not JSON). Ensure the M-Pesa proxy is running on port 8787.',
+    };
+  }
+}
+
 export async function requestStkPush(payload: StkPushPayload): Promise<StkPushResult> {
   const base = import.meta.env.VITE_MPESA_PROXY_BASE?.replace(/\/$/, '') ?? '';
   const url = `${base}/api/mpesa/stk-push`;
@@ -44,7 +69,12 @@ export async function requestStkPush(payload: StkPushPayload): Promise<StkPushRe
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    const json = (await res.json()) as { ok?: boolean; error?: string; mpesa?: unknown };
+    const text = await res.text();
+    const parsed = parseProxyResponse(text, res.status);
+    if (!parsed.ok) {
+      return { ok: false, status: res.status, error: parsed.error };
+    }
+    const json = parsed.json;
     if (!res.ok) {
       return {
         ok: false,
@@ -59,7 +89,16 @@ export async function requestStkPush(payload: StkPushPayload): Promise<StkPushRe
     return { ok: true, data: json.mpesa };
   } catch (e) {
     const msg = e instanceof Error ? e.message : 'Network error';
-    return { ok: false, error: msg };
+    const isNetwork =
+      msg === 'Failed to fetch' ||
+      msg.includes('NetworkError') ||
+      msg.includes('Load failed');
+    return {
+      ok: false,
+      error: isNetwork
+        ? 'Network error — is the dev server running and is npm run mpesa-server started?'
+        : msg,
+    };
   }
 }
 
